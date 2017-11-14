@@ -1,12 +1,12 @@
-%Lizaveta Mishkinitse
+ALizaveta Mishkinitse
 %Redes de Neuronas Artificiales
 %Curso 2017/18
 
 function adeline
 
-%Implementaci髇 de ADELINE (Adaptive Linear Element)
+%Implementaci贸n de ADALINE (Adaptive Linear Element)
 
-    %N鷐ero de ciclos de entrenamiento y la tasa de aprendizaje
+    %N煤mero de ciclos de entrenamiento y la tasa de aprendizaje
     num_cycles = 1000; 
     tasa = 0.001;
    
@@ -16,7 +16,7 @@ function adeline
     train_x = horzcat (train_x, ones(size(train_x,1),1));
     train_y = training(:, end);
     
-    %Conjunto de validaci髇
+    %Conjunto de validaci贸n
     validation = csvread('Validacion.csv');
     valid_x = validation(:, 1:end-1);
     valid_x = horzcat (valid_x, ones(size(valid_x,1),1));
@@ -29,13 +29,13 @@ function adeline
     test_y_norm = testing(:, end);
     test_y= csvread('Test_original.csv');
         
-    %Inicializaci髇 aleatoria de los pesos
+    %Inicializaci贸n aleatoria de los pesos
     w = rand(size(train_x,2),1);
     
-    %Creaci髇 de fichero para guardar los errores de entrenamiento y
-    %validaci髇
+    %Creaci贸n de fichero para guardar los errores de entrenamiento y
+    %validaci贸n
     filename = 'errorAdaline.xlsx';
-    file_data = {'Ciclo' 'Error de entrenamiento' 'Error de validaci髇'};
+    file_data = {'Ciclo' 'Error de entrenamiento' 'Error de validaci贸n'};
     
    cycle = 1;
    while cycle<=num_cycles
@@ -47,18 +47,18 @@ function adeline
         w = w + var_w;
     end 
    
-    %C醠culo error de entrenamiento
+    %C谩lculo error de entrenamiento
     out_train = train_x*w;
     training_error = (train_y - out_train).^2;
     training_error = (sum(training_error,1))/size(train_x,1);
     
-    %C醠culo error de validaci髇
+    %C谩lculo error de validaci贸n
     out_valid = valid_x*w;
     validation_error = (valid_y - out_valid).^2;
     validation_error = sum(validation_error,1)/size(valid_x,1);
     
     %Salida por pantalla de errores
-    %x = ['Error de entrenamiento: ', num2str(training_error), '   Error de validaci髇: ', num2str(validation_error)];
+    %x = ['Error de entrenamiento: ', num2str(training_error), '   Error de validaci贸n: ', num2str(validation_error)];
     %display(x) 
     
     file_data (cycle+1, :)  = {cycle training_error validation_error};
@@ -68,12 +68,12 @@ function adeline
    %Escritura de errores en el fichero de salida
    xlswrite(filename,file_data);
    
-   %C醠culo de la salida y error normalizado de test
+   %C谩lculo de la salida y error normalizado de test
    out_test = test_x*w;
    testing_error_norm = (test_y_norm - out_test).^2;
    testing_error_norm = sum(testing_error_norm,1)/size(test_y_norm,1);
    
-   %Desnormalizaci髇 de la salida del test
+   %Desnormalizaci贸n de la salida del test
    desnorm = csvread('ValoresParaDesnormalizar.csv');
    max_testing = desnorm (1);
    min_testing = desnorm (2);
